@@ -10,7 +10,7 @@ Scenario: Create a new user
     Given the service is running
     When I send POST HTTP request
     Then I receive valid HTTP response code 200  
-    And I get info of that specific user
+    And I get info on that specific user
 
 # Scenario: Update a user
 #     Given the service is running
