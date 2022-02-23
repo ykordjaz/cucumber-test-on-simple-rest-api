@@ -33,6 +33,7 @@ require "uri"
 #   end
   
 
+
 #  this is for the POST method
 
   Given('the service is running') do
@@ -52,25 +53,39 @@ require "uri"
     http = Net::HTTP.new(uri.host, uri.port)
     # header = {'Content-Type': 'text/json'}
 
-    # user = {
-    #   username: 'user1',
-    #   password: '000000'
-    #      }
+    user = {
+    
+      username: "user1",
+      password: "randompassword"
+         
+        }
+      p user.to_json
 
+    @user = user
     # Create the HTTP objects
     http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Post.new(uri.request_uri) { 'username' => "user1", "password" => "000000" }
+    # or should it be (uri.request_uri)
+    request = Net::HTTP::Post.new(uri) 
+    # request.header = header
+    request['Content-Type']='application/json'
     request.body = user.to_json
     response = http.request(request)
     @response = response
-    @user = user
     end
   
   Then('I receive valid HTTP response code {int}') do |expected_http_code|
+    puts @response
     expect(@response.code).to eq(expected_http_code.to_s)
   end
   
   Then('I get info of that specific user') do
-    expect(@response.body).to eq(@user)
+    user_response = JSON.parse(@response.body)
+    p user_response.keys
+    p user_response.values
+    # should return the value of password
+    # expected = user_response["username"].to_s
+p @user
+    expect(user_response["username"].to_s).to eq(@user[:username])
+
   end
   
