@@ -62,11 +62,14 @@ When('I send POST HTTP request') do
     # Create the HTTP objects
     http = Net::HTTP.new(uri.host, uri.port)
     # or should it be (uri.request_uri)
-    request = Net::HTTP::Post.new(uri) 
-    # request.header = header
-    request['Content-Type']='application/json'
-    request.body = user.to_json
-    response = http.request(request)
+    request_with_user_data = Net::HTTP::Post.new(uri) 
+    request_with_user_data['Content-Type']='application/json'
+
+    # storing user information in the HTTP POST request body in JSON format
+    request_with_user_data.body = user.to_json
+    # executing the HTTP POST request against HTTP endpoint
+    response = http.request(request_with_user_data)
+    # storing response as instance variable to be accessed later
     @response = response
 end
   
