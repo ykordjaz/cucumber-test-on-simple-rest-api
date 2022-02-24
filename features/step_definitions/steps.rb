@@ -122,7 +122,6 @@ When('I send PUT HTTP request') do
     @updated_user = updated_user
 end
 
-  
   Then('I get the info on the updated user') do
     @user_response = JSON.parse(@response.body)  
     # parsed the updated_user too, because otherwise it can't turn it into a hash and access the keys & values, and instead just reads the liteal string values e.g. "username" is "username", not the value "user2"
@@ -133,4 +132,23 @@ end
     # " { \"username\": \"user2\", \"password\": \"randompassword\" } "
     expect(@user_response["username"]).to eq(@updated_user["username"])
 end
+  
+# This is for the DELETE method
+
+When('I send DELETE HTTP request') do
+# #   Delete is a CLASS, not a method
+#     request = Net::HTTP.new('http://127.0.0.1:3000/api/v1/users/2').delete('/path') 
+
+    uri = URI('http://127.0.0.1:3000/api/v1/users/4')
+    http = Net::HTTP.new(uri.host, uri.port)
+    @req = Net::HTTP::Delete.new(uri.path)
+    @response = http.request(@req)
+    puts "deleted #{@response}"
+    @updated_request = Net::HTTP::Get.new(uri)
+    @updated_response = http.request(@updated_request)
+end
+  
+  Then('I receive HTTP response code {int}') do |int|
+    expect(@updated_response.code).to eq "404"
+  end
   

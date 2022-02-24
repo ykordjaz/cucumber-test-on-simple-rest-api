@@ -18,8 +18,8 @@ Scenario: Update a user
     Then I receive valid HTTP response code 200  
     And I get the info on the updated user
 
-# Scenario: Delete a user
-#     Given the service is running
-#     When I send DELETE HTTP request
-#     And I send GET HTTP request
-#     Then I receive valid HTTP response code 404     
+Scenario: Delete a user
+    Given the service is running
+    When I send DELETE HTTP request
+    And I send GET HTTP request
+    Then I receive HTTP response code 404     
