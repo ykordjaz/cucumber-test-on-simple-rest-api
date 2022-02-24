@@ -1,2 +1,7 @@
 gem 'rspec'
+
 gem 'rspec-expectations'
+
+group :test do
+  gem "json-schema"
+end
