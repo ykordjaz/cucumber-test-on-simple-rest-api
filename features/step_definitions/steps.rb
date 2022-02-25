@@ -31,7 +31,7 @@ When('I send GET HTTP request') do
 end
   
 Then('I receive valid HTTP response code {int}') do |expected_response_code|
-    # response.code is the 200, 400, etc code and it's a "string".
+    # @response.code is the 200, 400, etc code and it's a "string".
     expect(@response.code).to eq(expected_response_code.to_s)
 end
 
@@ -89,7 +89,7 @@ Then('I get info on that specific user') do
 
     # HASH  hashtable   or   dictionary
     # KEYS   =>   VALUES
-    # word  =>   meaning
+    # word  =>   meaning/definition
 
     # Hash that maps String =>  String    user_response
     # Hash that maps Symbol =>  String    @user
