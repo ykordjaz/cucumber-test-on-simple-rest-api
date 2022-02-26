@@ -2,6 +2,17 @@ gem 'rspec'
 
 gem 'rspec-expectations'
 
+# group :test do
+#   gem "json_schema"
+# end
+
+
 group :test do
-  gem "json-schema"
+  gem "json_matchers"
 end
+
+gem 'rspec-rails'
+
+gem 'net-http'
+
+#gem 'json_schema'

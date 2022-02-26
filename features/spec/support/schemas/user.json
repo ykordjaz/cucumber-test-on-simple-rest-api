@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+
+    "username": {
+      "type": "string"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "password": {
+      "type": "string"
+    },
+    
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+
+    "email": {
+      "type": "string"
+    }
+  }
+}

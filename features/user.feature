@@ -23,3 +23,9 @@ Scenario: Delete a user
     When I send DELETE HTTP request
     And I send GET HTTP request
     Then I receive HTTP response code 404     
+
+Scenario: User matches the json schema
+    Given the service is running
+    When I send HTTP GET to get user 6
+    Then User matches the json schema user
+

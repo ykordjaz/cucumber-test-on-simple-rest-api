@@ -1,6 +1,8 @@
 require "net/http"
 require "uri"
-# require "json_matchers/rspec"
+require "json_matchers/rspec"
+# require 'rspec'
+# require 'rails_helper'
 
 
 Given('the service is running') do
@@ -27,7 +29,6 @@ When('I send GET HTTP request') do
     # response = Net::HTTP.get_response(uri)
     @response = response
     # expect(response.code).to eq "200"
-
 end
   
 Then('I receive valid HTTP response code {int}') do |expected_response_code|
@@ -39,12 +40,8 @@ Then('I get a list of all users') do
     # below we convert the hash with strings into a json (so index 0 is a whole object with user details and so on, not just the first element of a string)
     # so user_response[0] => # {"id"=>2, "username"=>"Yas", "password"=>"Pass", "created_at"=>"2022-02-23T14:21:17.929Z", "updated_at"=>"2022-02-23T14:21:17.929Z"}
     user_response = JSON.parse(@response.body)
-    expect(user_response.size).to be > 0
-    # expect(user_response).to match_response_schema("user")
-
-
+    expect(user_response.size).to be > 0 
 end
-  
 
 # #  this is for the POST method
   
@@ -148,7 +145,23 @@ When('I send DELETE HTTP request') do
     @updated_response = http.request(@updated_request)
 end
   
-  Then('I receive HTTP response code {int}') do |int|
+Then('I receive HTTP response code {int}') do |int|
     expect(@updated_response.code).to eq "404"
-  end
+end
   
+
+When('I send HTTP GET to get user {int}') do |user_id|
+    # Ruby strings
+    # p 'this is a string #{user_id}' prints literally user_id (not interpolated with ' ' )
+    # p "this is a string #{user_id}" prints the user_id value (interpolated with " ")
+    uri = URI.parse("http://127.0.0.1:3000/api/v1/users/#{user_id}")
+    http = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Get.new(uri.request_uri)
+    @response = http.request(req)
+ 
+end
+    
+Then('User matches the json schema user') do
+    expect(@response).to match_response_schema("user")
+end
+    
